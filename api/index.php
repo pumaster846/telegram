@@ -11,14 +11,14 @@ $data = $data['callback_query'] ? $data['callback_query'] : $data['message'];
 $message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
 
 $chatId = $data['chat']['id'];
-$userName = $data['message']['from']['first_name'];
+$userName = $data['chat']['first_name'];
 
 switch($message) {
     case '/start':
         $method = 'sendMessage';
         $options = [
-            'text'   =>
-                "Добрый день, {$userName}!".PHP_EOL.
+            'text' =>
+                "Добрый день, {$userName}!" . PHP_EOL .
                 "Вы можете записаться к стоматологу всего за пару кликов." . PHP_EOL .
                 "Чтобы записаться необходимо:" . PHP_EOL .
                 "1. Раскрыть меню с кнопками." . PHP_EOL .
