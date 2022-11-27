@@ -6,7 +6,8 @@ const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
 $jsonData = json_decode(file_get_contents('php://input'), true);
 
-print_r($jsonData);
+var_dump(json_decode(file_get_contents('php://input'), true));
+
 
 function sendRequest(string $method, array $options = []) {
     $initializer = curl_init();
@@ -33,7 +34,8 @@ function sendRequest(string $method, array $options = []) {
     return json_decode($response, true);
 }
 
-$chat_id = $jsonData['message']['chat']['id'];
-sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Privet']);
+var_dump(sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Privet']));
+//$chat_id = $jsonData['message']['chat']['id'];
+//sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Privet']);
 
 echo "<br><br>" . $chat_id;
