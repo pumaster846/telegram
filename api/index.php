@@ -33,7 +33,19 @@ function sendRequest(string $method, array $options = []) {
     return json_decode($response, true);
 }
 
-sendRequest('sendMessage', ['text' => $message]);
+switch ($message)
+{
+    case 'текст':
+        $method = 'sendMessage';
+        $send_data = 'Вот мой ответ';
+    break;
+
+    default:
+        $method = 'sendMessage';
+        $send_data = $message;
+}
+
+sendRequest($method, ['text' => $send_data]);
 
 ?>
 </pre>
