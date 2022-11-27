@@ -16,25 +16,24 @@ $userName = $data['chat']['first_name'];
 switch($message) {
     case '/start':
         $method = 'sendMessage';
-        $options = array(
+        $options = [
             'chat_id' => $chatId,
             'text' =>
                 "Добрый день, {$userName}!".PHP_EOL.
-                "Вы можете записаться к стоматологу всего за пару кликов." . PHP_EOL .
-                "Чтобы записаться необходимо:" . PHP_EOL .
+                "Чтобы записаться к стоматологу необходимо:" . PHP_EOL .
                 "1. Раскрыть меню с кнопками." . PHP_EOL .
                 "2. Нажать на кнопку 'Записаться'." . PHP_EOL .
                 "3. Выбрать день записи.",
-            'reply_markup' => array(
-                'resize_keyboard' => true,
-                'keyboard' => array(
-                    array(
+            'reply_markup' => [
+                'resize_keyboard' => false,
+                'keyboard' => [
+                    [
                         ['text' => 'Записаться'],
                         ['text' => 'Мои записи']
-                    )
-                )
-            )
-        );
+                    ]
+                ]
+            ]
+        ];
     break;
     case 'Записаться':
 
