@@ -11,28 +11,29 @@ $data = $data['callback_query'] ? $data['callback_query'] : $data['message'];
 $message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
 
 $chatId = $data['chat']['id'];
+$userName = $data['message']['from']['first_name'];
 
 switch($message) {
     case '/start':
         $method = 'sendMessage';
-        $options = array(
-            'chat_id' => $chatId,
-            'text' =>
+        $options = [
+            'text'   =>
                 "Добрый день, {$userName}!".PHP_EOL.
-                "Вы можете записаться к стоматологу всего за пару кликов:" . PHP_EOL .
+                "Вы можете записаться к стоматологу всего за пару кликов." . PHP_EOL .
+                "Чтобы записаться необходимо:" . PHP_EOL .
                 "1. Раскрыть меню с кнопками." . PHP_EOL .
                 "2. Нажать на кнопку 'Записаться'." . PHP_EOL .
                 "3. Выбрать день записи.",
-            'reply_markup' => array(
+            'reply_markup' => [
                 'resize_keyboard' => true,
-                'keyboard' => array(
-                    array(
+                'keyboard' => [
+                    [
                         ['text' => 'Записаться'],
-                        ['text' => 'Мои записи']
-                    )
-                )
-            )
-        );
+                        ['text' => 'Мои записи'],
+                    ],
+                ]
+            ]
+        ];
     break;
     case 'Записаться':
 
@@ -42,14 +43,11 @@ switch($message) {
     break;
     default:
         $method = 'sendMessage';
-        $options = array(
-            'chat_id' => $chatId,
-            'text' =>
-                "{$userName}, я такой команды не знаю."
-        );
+        $options = [
+            'text'  => "{$userName}, я не знаю такой команды"
+        ];
     break;
 }
-
 
 sendRequest($method, $options);
 
