@@ -8,6 +8,7 @@ $jsonData = json_decode(file_get_contents('php://input'), true);
 
 $jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 
+$chat_id['chat_id'] = $data['chat']['id'];
 $message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
 
 function sendRequest(string $method, array $options = []) {
@@ -35,19 +36,18 @@ function sendRequest(string $method, array $options = []) {
     return json_decode($response, true);
 }
 
-switch ($message)
-{
+switch ($message) {
     case 'текст':
         $method = 'sendMessage';
-        $send_data = 'Вот мой ответ';
+        $options = 'Вот мой ответ';
     break;
 
     default:
         $method = 'sendMessage';
-        $send_data = $message;
+        $options = 'Вот мой ответFsdasdasd';
 }
 
-sendRequest($method, ['text' => $send_data]);
+sendRequest($method, ['chat_id' => $chatId, 'text' => $options]);
 
 ?>
 </pre>
