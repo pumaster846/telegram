@@ -34,8 +34,10 @@ function sendRequest(string $method, array $options = []) {
     return json_decode($response, true);
 }
 
+
+$chat_id = $jsonData['message']['chat']['id'];
+var_dump($jsonData['message']['chat']['id']);
 var_dump(sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Privet']));
-//$chat_id = $jsonData['message']['chat']['id'];
 //sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Privet']);
 
 echo "<br><br>" . $chat_id;
