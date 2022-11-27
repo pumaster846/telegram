@@ -16,6 +16,28 @@ $userName = $data['chat']['first_name'];
 switch($message) {
     case '/start':
         $method = 'sendMessage';
+        $send_data = [
+            'chat_id' => $chatId,
+            'text' =>
+                "Добрый день, {$userName}!".PHP_EOL.
+                "Чтобы записаться к стоматологу необходимо:" . PHP_EOL .
+                "1. Раскрыть меню с кнопками." . PHP_EOL .
+                "2. Нажать на кнопку 'Записаться'." . PHP_EOL .
+                "3. Выбрать день записи.",
+            'reply_markup' => [
+                'resize_keyboard' => true,
+                'keyboard' => [
+                    [
+                        ['text' => 'Видео'],
+                        ['text' => 'Кнопка 2'],
+                    ],
+                    [
+                        ['text' => 'Кнопка 3'],
+                        ['text' => 'Кнопка 4'],
+                    ]
+                ]
+            ]
+        ];
         $options = [
             'chat_id' => $chatId,
             'text' =>
@@ -25,7 +47,7 @@ switch($message) {
                 "2. Нажать на кнопку 'Записаться'." . PHP_EOL .
                 "3. Выбрать день записи.",
             'reply_markup' => [
-                'resize_keyboard' => false,
+                'resize_keyboard' => true,
                 'keyboard' => [
                     [
                         ['text' => 'Записаться'],
