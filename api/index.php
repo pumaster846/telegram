@@ -18,6 +18,9 @@ function sendRequest(string $method, array $options = []) {
     return json_decode(file_get_contents($requestURL), true);
 }
 
+$chat_id = $update['message']['chat']['id'];
+sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Privet']);
+
 var_dump($update);
 ?>
 
