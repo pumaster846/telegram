@@ -6,7 +6,7 @@ const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
 $jsonData = json_decode(file_get_contents('php://input'), true);
 
-$message = mb_strtolower($jsonData['message']['text'], 'utf-8');
+$message = mb_strtolower($jsonData['text'], 'utf-8');
 
 function sendRequest(string $method, array $options = []) {
     $initializer = curl_init();
