@@ -7,8 +7,6 @@ const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 $jsonData = json_decode(file_get_contents('php://input'), true);
 
 $jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
-
-
 $message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
 
 switch ($message) {
@@ -31,7 +29,6 @@ $options['chat_id'] = $jsonData['chat']['id'];
 sendRequest($method, $options);
 
 function sendRequest(string $method, array $options = []) {
-
     $url = API_URL . API_TOKEN . '/' . $method . '?' . http_build_query($options);
 
     $initializer = curl_init();
