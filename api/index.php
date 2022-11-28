@@ -26,6 +26,7 @@ switch ($message) {
             'chat_id' => $chatId,
             'text' => 'Я не знаю такой команды'
         ];
+        break;
 }
 
 sendRequest($method, $options);
