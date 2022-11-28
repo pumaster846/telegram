@@ -19,12 +19,14 @@ switch ($message) {
                       "Чтобы записаться к нашему стоматологу необходимо:" . PHP_EOL .
                       "1. Кликнуть на кнопку - Записаться." . PHP_EOL .
                       "2. Выбрать удобную дату приёма",
-            'resize_keyboard' => true,
-             'keyboard' => [
-              [
+            'reply_markup' => [
+                'resize_keyboard' => true,
+                'keyboard' => [
+                    [
                         ['text' => 'Записаться'],
                         ['text' => 'Мои записи'],
-              ],
+                    ],
+                ]
             ]
         ];
         break;
@@ -41,15 +43,18 @@ switch ($message) {
 $options['chat_id'] = $jsonData['chat']['id'];
 sendRequest($method, $options);
 
-function sendRequest(string $method, array $options = []) {
-    $url = API_URL . API_TOKEN . '/' . $method . '?' . http_build_query($options);
+function sendRequest(string $method, array $options, array $headers = []) {
 
     $initializer = curl_init();
 
     curl_setopt_array($initializer, array(
-        CURLOPT_URL => $url,
+        CURLOPT_URL => API_URL . API_TOKEN . '/' . $method,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CONNECTTIMEOUT => 10
+        CURLOPT_POST => 1,
+        CURLOPT_HEADER => 0,
+        CURLOPT_POSTFIELDS => json_encode($options),
+        CURLOPT_HTTPHEADER => array_merge(array("Content-Type: application/json"), $headers)
     ));
 
     $response = curl_exec($initializer);
