@@ -7,7 +7,7 @@ $data = json_decode(file_get_contents('php://input'), TRUE);
 $data = $data['callback_query'] ? $data['callback_query'] : $data['message'];
 
 $message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
-
+$userName = $data['chat']['first_name'];
 
 # Обрабатываем сообщение
 switch ($message)
