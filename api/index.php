@@ -30,13 +30,9 @@ switch ($message) {
 $options['chat_id'] = $jsonData['chat']['id'];
 sendRequest($method, $options);
 
-function sendRequest($method, $options = []) {
+function sendRequest(string $method, array $options = []) {
 
-    $url = API_URL . API_TOKEN . '/' . $method;
-
-    if (!empty($options)) {
-        $url .= '?' . http_build_query($options);
-    }
+    $url = API_URL . API_TOKEN . '/' . $method . '?' . http_build_query($options);
 
     $initializer = curl_init();
 
