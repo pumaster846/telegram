@@ -9,7 +9,7 @@ $jsonData = json_decode(file_get_contents('php://input'), true);
 $jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 
 $chatId = $jsonData['chat']['id'];
-$message = mb_strtolower($jsonData['text'], 'utf-8');
+$message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
 
 switch ($message) {
     case 'Текст':
