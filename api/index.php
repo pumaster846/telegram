@@ -11,10 +11,19 @@ $message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['dat
 $userName = $jsonData['chat']['first_name'];
 
 switch ($message) {
-    case 'текст':
+    case '/start':
         $method = 'sendMessage';
         $options = [
-            'text' => 'privet'
+            'text' => "Добрый день, <b>{$userName}</b>!" . PHP_EOL .
+                      "Чтобы записаться к нашему стоматологу необходимо:" . PHP_EOL .
+                      "1. Кликнуть на кнопку - Записаться." . PHP_EOL .
+                      "2. Выбрать удобную дату приёма",
+            'reply_markup' => [
+                'keyboard' => [
+                    ['text' => 'Записаться'],
+                    ['text' => 'Мои записи']
+                ]
+            ]
         ];
         break;
 
