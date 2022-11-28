@@ -8,14 +8,13 @@ $jsonData = json_decode(file_get_contents('php://input'), true);
 
 $jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 
-$chatId = $jsonData['chat']['id'];
+
 $message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
 
 switch ($message) {
     case 'текст':
         $method = 'sendMessage';
         $options = [
-            'chat_id' => $chatId,
             'text' => 'privet'
         ];
         break;
@@ -23,12 +22,12 @@ switch ($message) {
     default:
         $method = 'sendMessage';
         $options = [
-            'chat_id' => $chatId,
             'text' => 'Я не знаю такой команды'
         ];
         break;
 }
 
+$options['chat_id'] = $jsonData['chat']['id'];
 sendRequest($method, $options);
 
 function sendRequest($method, $options = []) {
