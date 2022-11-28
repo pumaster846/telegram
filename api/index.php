@@ -1,31 +1,68 @@
-<?php
-const API_URL = "https://api.telegram.org/bot";
-const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
-$jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
+# Принимаем запрос
+$data = json_decode(file_get_contents('php://input'), TRUE);
+//file_put_contents('file.txt', '$data: '.print_r($data, 1)."\n", FILE_APPEND);
 
-$message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
-$chatId = $jsonData['chat']['id'];
+
+//https://api.telegram.org/bot*Токен бота*/setwebhook?url=*ссылка на бота*
+
+
+# Обрабатываем ручной ввод или нажатие на кнопку
+$data = $data['callback_query'] ? $data['callback_query'] : $data['message'];
+
+# Важные константы
+define('TOKEN', '5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE');
+
+# Записываем сообщение пользователя
+$message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
+
 
 # Обрабатываем сообщение
 switch ($message)
 {
-    case '/start':
+    case 'текст':
         $method = 'sendMessage';
-        $methodSettings = [
-            'chat_id' => $chatId,
-            'parse_mode' => 'HTML',
-            'text' =>
-                "Добрый день, <b>{$userName}</b>!" . PHP_EOL .
-                "Чтобы записаться к нашему стоматологу необходимо:" . PHP_EOL .
-                "1. Кликнуть на кнопку - Записаться." . PHP_EOL .
-                "2. Выбрать удобную дату приёма",
+        $send_data = [
+            'text'   => 'Вот мой ответ'
+        ];
+        break;
+
+    case 'кнопки':
+        $method = 'sendMessage';
+        $send_data = [
+            'text'   => 'Вот мои кнопки',
             'reply_markup' => [
                 'resize_keyboard' => true,
                 'keyboard' => [
                     [
-                        ['text' => 'Записаться'],
-                        ['text' => 'Мои записи'],
+                        ['text' => 'Видео'],
+                        ['text' => 'Кнопка 2'],
+                    ],
+                    [
+                        ['text' => 'Кнопка 3'],
+                        ['text' => 'Кнопка 4'],
+                    ]
+                ]
+            ]
+        ];
+        break;
+
+
+    case 'видео':
+        $method = 'sendVideo';
+        $send_data = [
+            'video'   => 'https://chastoedov.ru/video/amo.mp4',
+            'caption' => 'Вот мое видео',
+            'reply_markup' => [
+                'resize_keyboard' => true,
+                'keyboard' => [
+                    [
+                        ['text' => 'Кнопка 1'],
+                        ['text' => 'Кнопка 2'],
+                    ],
+                    [
+                        ['text' => 'Кнопка 3'],
+                        ['text' => 'Кнопка 4'],
                     ]
                 ]
             ]
@@ -34,25 +71,24 @@ switch ($message)
 
     default:
         $method = 'sendMessage';
-        $methodSettings = [
-            'chat_id' => $chatId,
-            'parse_mode' => 'HTML',
-            'text' => "<b>{$userName}</b>, я не знаю такой команды"
+        $send_data = [
+            'text' => 'Не понимаю о чем вы :('
         ];
-        break;
 }
 
-sendRequest($method, $methodSettings);
+# Добавляем данные пользователя
+$send_data['chat_id'] = $data['chat']['id'];
 
-function sendRequest($method, $data, $headers = [])
+$res = sendTelegram($method, $send_data);
+
+function sendTelegram($method, $data, $headers = [])
 {
     $curl = curl_init();
     curl_setopt_array($curl, [
         CURLOPT_POST => 1,
         CURLOPT_HEADER => 0,
         CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_URL => API_URL . API_TOKEN . '/' . $method,
-        CURLOPT_CONNECTTIMEOUT => 10
+        CURLOPT_URL => 'https://api.telegram.org/bot' . TOKEN . '/' . $method,
         CURLOPT_POSTFIELDS => json_encode($data),
         CURLOPT_HTTPHEADER => array_merge(array("Content-Type: application/json"), $headers)
     ]);   
