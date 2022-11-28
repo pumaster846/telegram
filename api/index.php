@@ -8,26 +8,43 @@ $jsonData = json_decode(file_get_contents('php://input'), true);
 
 $jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 
-$chatId['chat_id'] = $jsonData['chat']['id'];
-$message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
+$chatId = $jsonData['chat']['id'];
+$message = mb_strtolower($jsonData['text'], 'utf-8');
 
-function sendRequest(string $method, array $options = []) {
-    $initializer = curl_init();
+switch ($message) {
+    case 'Текст':
+        $method = 'sendMessage';
+        $options = [
+            'chat_id' => $chatId,
+            'text' => 'privet'
+        ];
+        break;
+
+    default:
+        $method = 'sendMessage';
+        $options = [
+            'chat_id' => $chatId,
+            'text' => 'Я не знаю такой команды'
+        ];
+}
+
+sendRequest($method, $options);
+
+function sendRequest($method, $options = []) {
 
     $url = API_URL . API_TOKEN . '/' . $method;
-    //https://api.telegram.org/bot5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE/getUpdates?offset=607341323
 
-    if(!empty($options)) {
+    if (!empty($options)) {
         $url .= '?' . http_build_query($options);
     }
 
-    $setoptsArray = array(
+    $initializer = curl_init();
+
+    curl_setopt_array($initializer, array(
         CURLOPT_URL => $url,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CONNECTTIMEOUT => 10
-    );
-
-    curl_setopt_array($initializer, $setoptsArray);
+    ));
 
     $response = curl_exec($initializer);
 
@@ -35,19 +52,6 @@ function sendRequest(string $method, array $options = []) {
 
     return json_decode($response, true);
 }
-
-switch ($message) {
-    case 'текст':
-        $method = 'sendMessage';
-        $options = 'Вот мой ответ';
-    break;
-
-    default:
-        $method = 'sendMessage';
-        $options = 'Вот мой ответ 2';
-}
-
-sendRequest($method, ['chat_id' => $chatId, 'text' => $options]);
 
 ?>
 </pre>
