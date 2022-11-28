@@ -63,5 +63,5 @@ function sendRequest($method, $jsonData, $headers = [])
     $response = curl_exec($initializer);
     curl_close($initializer);
     
-    return json_decode($response, true);
+    return (json_decode($response, 1) ? json_decode($response, 1) : $response);
 }
