@@ -7,11 +7,10 @@ $jsonData = json_decode(file_get_contents('php://input'), true);
 $jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 
 $message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
-$chatId['chat_id'] = $jsonData['chat']['id'];
+$chatId = $jsonData['chat']['id'];
 $userName = $jsonData['chat']['first_name'];
 
-switch ($message)
-{
+switch ($message) {
     case '/start':
         $method = 'sendMessage';
         $methodOptions = [
