@@ -12,7 +12,7 @@ $chatId = $jsonData['chat']['id'];
 $message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
 
 switch ($message) {
-    case 'Текст':
+    case 'текст':
         $method = 'sendMessage';
         $options = [
             'chat_id' => $chatId,
