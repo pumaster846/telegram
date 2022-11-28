@@ -19,14 +19,12 @@ switch ($message) {
                       "Чтобы записаться к нашему стоматологу необходимо:" . PHP_EOL .
                       "1. Кликнуть на кнопку - Записаться." . PHP_EOL .
                       "2. Выбрать удобную дату приёма",
-            'reply_markup' => [
-                'resize_keyboard' => true,
-                'keyboard' => [
-                    [
+            'resize_keyboard' => true,
+             'keyboard' => [
+              [
                         ['text' => 'Записаться'],
                         ['text' => 'Мои записи'],
-                    ],
-                ]
+              ],
             ]
         ];
         break;
