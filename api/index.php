@@ -8,6 +8,7 @@ $jsonData = json_decode(file_get_contents('php://input'), true);
 
 $jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 $message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
+$userName = $jsonData['chat']['first_name'];
 
 switch ($message) {
     case 'текст':
@@ -20,7 +21,8 @@ switch ($message) {
     default:
         $method = 'sendMessage';
         $options = [
-            'text' => 'Я не знаю такой команды'
+            'parse_mode' => 'HTML',
+            'text' => "<b>{$userName}</b>, я не знаю такой команды"
         ];
         break;
 }
