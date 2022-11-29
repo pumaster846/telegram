@@ -8,6 +8,7 @@ $jsonData = json_decode(file_get_contents('php://input'), true);
 $jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 
 $message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
+
 $chatId = $jsonData['chat']['id'];
 $messageId = $jsonData['message_id'];
 $userName = $jsonData['chat']['first_name'];
@@ -19,28 +20,30 @@ switch ($message) {
             'chat_id' => $chatId,
             'parse_mode' => 'HTML',
             'text'   =>
-                "Добрый день, <b>{$userName}</b>!" . PHP_EOL .
-                "Чтобы записаться к нашему стоматологу необходимо:" . PHP_EOL .
-                "1. Кликнуть на кнопку - Записаться." . PHP_EOL .
-                "2. Выбрать удобную дату приёма",
+                "Привет, <b>{$userName}</b>!" . PHP_EOL .
+                "Я pet проект Мирсала, меня зовут MirBellGet и я умею:" . PHP_EOL .
+                "<b>1.</b> Lorem ipsum dolor sit" . PHP_EOL .
+                "<b>2.</b> Lorem ipsum dolor sit" . PHP_EOL .
+                "<b>3.</b> Lorem ipsum dolor sit" . PHP_EOL .
+                "<b>4.</b> Lorem ipsum dolor sit",
             'reply_markup' => [
                 'resize_keyboard' => true,
                 'keyboard' => [
                     [
-                        ['text' => 'Записаться'],
-                        ['text' => 'Мои записи'],
+                        ['text' => 'Кнопка1'],
+                        ['text' => 'Кнопка2']
+                    ],
+                    [
+                        ['text' => 'Кнопка3'],
+                        ['text' => 'Кнопка4'],
+                        ['text' => 'Кнопка5']
+                    ],
+                    [
+                        ['text' => 'Кнопка6']
                     ]
                 ]
             ]
         ];
-
-    case 'удалить':
-        $method = 'deleteMessage';
-        $methodOptions = [
-            'chat_id' => $chatId,
-            'message_id' => $messageId
-        ];
-    break;
 
     default:
         $method = 'sendMessage';
