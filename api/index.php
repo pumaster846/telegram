@@ -11,6 +11,9 @@ $message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['dat
 $chatId = $jsonData['chat']['id'];
 $userName = $jsonData['chat']['first_name'];
 
+$version = '1.0';
+$releaseDate = '17.12.2002';
+
 switch ($message) {
     case '/start':
         $method = 'sendMessage';
@@ -19,28 +22,43 @@ switch ($message) {
             'parse_mode' => 'HTML',
             'text' =>
                 "Привет, <b>{$userName}</b>!" . PHP_EOL .
-                "Я pet проект Мирсала, меня зовут MirBellGet и я умею:" . PHP_EOL .
-                "<b>1.</b> Lorem ipsum dolor sit" . PHP_EOL .
-                "<b>2.</b> Lorem ipsum dolor sit" . PHP_EOL .
-                "<b>3.</b> Lorem ipsum dolor sit" . PHP_EOL .
-                "<b>4.</b> Lorem ipsum dolor sit",
+                "Я бот MirBellGet, моя версия {$version}, дата выпуска {$releaseDate}",
             'reply_markup' => [
                 'resize_keyboard' => true,
                 'keyboard' => [
                     [
-                        ['text' => 'Кнопка1'],
-                        ['text' => 'Кнопка2']
+                        ['text' => 'Услуги']
                     ],
                     [
-                        ['text' => 'Кнопка3'],
-                        ['text' => 'Кнопка4'],
-                        ['text' => 'Кнопка5']
-                    ],
-                    [
-                        ['text' => 'Кнопка6']
+                        ['text' => 'О нас'],
+                        ['text' => 'Контакты']
                     ]
                 ]
             ]
+        ];
+    break;
+
+    case 'о нас':
+        $method = 'sendMessage';
+        $methodOptions = [
+            'chat_id' => $chatId,
+            'parse_mode' => 'HTML',
+            'text' =>
+                "<b>О компании</b>"
+                . PHP_EOL . "" . PHP_EOL .
+                "Информация о компании"
+        ];
+    break;
+
+    case 'контакты':
+        $method = 'sendMessage';
+        $methodOptions = [
+            'chat_id' => $chatId,
+            'parse_mode' => 'HTML',
+            'text' =>
+                "<b>О компании:</b>"
+                . PHP_EOL . "" . PHP_EOL .
+                "Информация о компании"
         ];
     break;
 
@@ -49,7 +67,12 @@ switch ($message) {
         $methodOptions = [
             'chat_id' => $chatId,
             'parse_mode' => 'HTML',
-            'text' => "<b>{$userName}</b>, я не знаю такой команды"
+            'text' =>
+                "<b>Наши контакты:</b>"
+                . PHP_EOL . "" . PHP_EOL .
+                "Номер телефона: {$phoneNumber}" . PHP_EOL .
+                "Почта: {$emailAdress}"
+
         ];
     break;
 }
