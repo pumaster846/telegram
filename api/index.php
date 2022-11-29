@@ -4,18 +4,21 @@ const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
 $jsonData = json_decode(file_get_contents('php://input'), true);
 $data = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
-$userMessage = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
-$chatId = $data['chat']['id'];
-$userName = $data['chat']['first_name'];
 
-switch ($userMessage) {
+$userData = array(
+    'userMessage' => mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8'),
+    'chatId' => $data['chat']['id'],
+    'userName' => $data['chat']['first_name']
+);
+
+switch ($userData['userMessage']) {
     case '/start':
         $method = 'sendMessage';
         $methodOptions = [
-            'chat_id' => $chatId,
+            'chat_id' => $userData['chatId'],
             'parse_mode' => 'HTML',
             'text' =>
-                "Привет, <b>{$userName}</b>!" . PHP_EOL .
+                "Привет, <b>{$userData['userName']}</b>!" . PHP_EOL .
                 "Я бот <b>MirBellGet</b>." . PHP_EOL .
                 "Моя версия: {$version}" . PHP_EOL .
                 "Дата выпуска: {$releaseDate}",
@@ -37,14 +40,10 @@ switch ($userMessage) {
     default:
         $method = 'sendMessage';
         $methodOptions = [
-            'chat_id' => $chatId,
+            'chat_id' => $userData['chatId'],
             'parse_mode' => 'HTML',
             'text' =>
-                "<b>Наши контакты:</b>"
-                . PHP_EOL . "" . PHP_EOL .
-                "Номер телефона: {$phoneNumber}" . PHP_EOL .
-                "Почта: {$emailAdress}"
-
+                "Хз"
         ];
     break;
 }
