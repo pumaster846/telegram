@@ -8,9 +8,7 @@ $jsonData = json_decode(file_get_contents('php://input'), true);
 $jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 
 $message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
-
 $chatId = $jsonData['chat']['id'];
-$messageId = $jsonData['message_id'];
 $userName = $jsonData['chat']['first_name'];
 
 switch ($message) {
@@ -19,7 +17,7 @@ switch ($message) {
         $methodOptions = [
             'chat_id' => $chatId,
             'parse_mode' => 'HTML',
-            'text'   =>
+            'text' =>
                 "Привет, <b>{$userName}</b>!" . PHP_EOL .
                 "Я pet проект Мирсала, меня зовут MirBellGet и я умею:" . PHP_EOL .
                 "<b>1.</b> Lorem ipsum dolor sit" . PHP_EOL .
@@ -31,19 +29,20 @@ switch ($message) {
                 'keyboard' => [
                     [
                         ['text' => 'Кнопка1'],
-                        ['text' => 'Кнопка2']
+                        ['text' => 'Кнопка2'],
                     ],
                     [
                         ['text' => 'Кнопка3'],
                         ['text' => 'Кнопка4'],
-                        ['text' => 'Кнопка5']
+                        ['text' => 'Кнопка5'],
                     ],
                     [
-                        ['text' => 'Кнопка6']
+                        ['text' => 'Кнопка6'],
                     ]
                 ]
             ]
         ];
+    break;
 
     default:
         $method = 'sendMessage';
