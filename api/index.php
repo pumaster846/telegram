@@ -13,7 +13,7 @@ class Api {
     }
 
     public function setTelegramData() {
-        $data = getTelegramData();
+        $data = $this->getTelegramData();
 
         $this->chatId = $data['chat']['id'];
         $this->userName = $data['chat']['first_name'];
