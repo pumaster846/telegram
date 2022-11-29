@@ -6,9 +6,9 @@ $jsonData = json_decode(file_get_contents('php://input'), true);
 $data = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 
 $userData = array(
-    'userMessage' => mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8'),
     'chatId' => $data['chat']['id'],
-    'userName' => $data['chat']['first_name']
+    'userName' => $data['chat']['first_name'],
+    'userMessage' => mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8')
 );
 
 switch ($userData['userMessage']) {
