@@ -1,5 +1,19 @@
 <?php
+const API_URL = "https://api.telegram.org/bot";
+const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
+class Api {
+    public function Api() {
+        return API_URL;
+    }
+}
+
+
+$ap = new Api();
+$d = $ap->Api();
+echo $d;
+
+/*
 const API_URL = "https://api.telegram.org/bot";
 const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
@@ -72,3 +86,4 @@ $data = $api->getData();
 $message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
 
 $request = $api->createRequest($message);
+*/
