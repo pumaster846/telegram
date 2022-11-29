@@ -1,5 +1,8 @@
 <?php
 
+const API_URL = "https://api.telegram.org/bot";
+const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
+
 class Api{
     protected int $chatId;
     protected string $userName;
