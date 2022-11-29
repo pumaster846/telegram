@@ -115,7 +115,7 @@ foreach ($request as $ap) {
     sendRequest($ap['method'], $ap['methodOptions']);
 }
 
-function sendRequest($method = [], $jsonData, $headers = []) {
+function sendRequest($method, $jsonData, $headers = []) {
     $initializer = curl_init();
     
     curl_setopt_array($initializer, [
