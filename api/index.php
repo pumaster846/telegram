@@ -64,3 +64,41 @@ function sendRequest($method, $jsonData, $headers = [])
     
     return (json_decode($response, 1) ? json_decode($response, 1) : $response);
 }
+
+
+
+
+class DataBase {
+    private $pdo;
+
+    public function __construct() {
+        $this->connect();
+    }
+
+    public function connect() {
+        $config = require_once('config.php');
+
+        $dataSourse = "mysql:host=localhost;dbname=telegram_bot;charset=utf8;";
+        $this->pdo = new PDO($dataSourse, 'telegram_admin', 'b22Je26Yb4j');
+
+        return $this;
+    }
+    public function getData(string $sql) {
+        $request = $this->pdo->query($sql);
+        $result = $request->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($result)) {
+            print('Записей не обнаружено');
+        }
+        return $result;
+    }
+    public function executeRequest(string $sql) {
+        $request = $this->pdo->prepare($sql);
+        return $request->execute();
+    }
+
+}
+
+$pdo = new DataBase();
+
+$patients = $pdo->getData("SELECT * FROM users");
