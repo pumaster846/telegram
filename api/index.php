@@ -7,13 +7,9 @@ class Api {
     protected string $userName;
     protected string $userMessage;
 
-    public function getTelegramData() {
-        $data = json_decode(file_get_contents('php://input'), true);
-        return $data['callback_query'] ? $data['callback_query'] : $data['message'];
-    }
-
     public function setTelegramData() {
-        $data = $this->getTelegramData();
+        $data = json_decode(file_get_contents('php://input'), true);
+        $data['callback_query'] ? $data['callback_query'] : $data['message'];
 
         $this->chatId = $data['chat']['id'];
         $this->userName = $data['chat']['first_name'];
