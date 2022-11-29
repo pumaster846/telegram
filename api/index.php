@@ -9,7 +9,7 @@ class Api {
 
     public function setTelegramData() {
         $data = json_decode(file_get_contents('php://input'), true);
-        $data['callback_query'] ? $data['callback_query'] : $data['message'];
+        $data = $data['callback_query'] ? $data['callback_query'] : $data['message'];
 
         $this->chatId = $data['chat']['id'];
         $this->userName = $data['chat']['first_name'];
@@ -18,16 +18,16 @@ class Api {
 }
 
 $api = new Api();
-$data = $api->setTelegramData();
+$api->setTelegramData();
 
 switch ($api->userMessage) {
     case '/start':
         $method = 'sendMessage';
         $methodOptions = [
-            'chat_id' => $data->chatId,
+            'chat_id' => $api->chatId,
             'parse_mode' => 'HTML',
             'text' =>
-                "Привет, <b>{$data->userName}</b>!" . PHP_EOL .
+                "Привет, <b>{$api->userName}</b>!" . PHP_EOL .
                 "Я бот <b>MirBellGet</b>." . PHP_EOL .
                 "Моя версия:" . PHP_EOL .
                 "Дата выпуска:",
@@ -49,7 +49,7 @@ switch ($api->userMessage) {
     default:
         $method = 'sendMessage';
         $methodOptions = [
-            'chat_id' => $data->chatId,
+            'chat_id' => $api->chatId,
             'parse_mode' => 'HTML',
             'text' =>
                 "<b>Не знаю</b>"
