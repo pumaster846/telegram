@@ -1,9 +1,8 @@
 <?php
 
 class Api{
-    const
-        $chatId,
-        $userName;
+    protected int $chatId;
+    protected string $userName;
 
     public function getData() {
         $data = json_decode(file_get_contents('php://input'), true);
