@@ -51,14 +51,12 @@ switch ($message) {
     break;
 
     case 'контакты':
-        $method = 'sendMessage';
+        $method = 'sendContact';
         $methodOptions = [
             'chat_id' => $chatId,
-            'parse_mode' => 'HTML',
-            'text' =>
-                "<b>О компании:</b>"
-                . PHP_EOL . "" . PHP_EOL .
-                "Информация о компании"
+            'phone_number' => '8(900)999-99-99',
+            'first_name' => 'Name',
+            'last_name' => 'LastName'
         ];
     break;
 
