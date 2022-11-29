@@ -76,8 +76,6 @@ class DataBase {
     }
 
     public function connect() {
-        $config = require_once('config.php');
-
         $dataSourse = "mysql:host=localhost;dbname=telegram_bot;charset=utf8;";
         $this->pdo = new PDO($dataSourse, 'telegram_admin', 'b22Je26Yb4j');
 
