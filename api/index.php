@@ -24,7 +24,7 @@ switch ($message) {
                 "Привет, <b>{$userName}</b>!" . PHP_EOL .
                 "Я бот MirBellGet" . PHP_EOL .
                 "Моя версия: {$version}" . PHP_EOL .
-                "Дата выпуска: {$releaseDate}"
+                "Дата выпуска: {$releaseDate}",
             'reply_markup' => [
                 'resize_keyboard' => true,
                 'keyboard' => [
@@ -56,7 +56,7 @@ switch ($message) {
         $method = 'sendContact';
         $methodOptions = [
             'chat_id' => $chatId,
-            'phone_number' => '8(900)000-00-00',
+            'phone_number' => '8(900)999-99-99',
             'first_name' => 'Name',
             'last_name' => 'LastName'
         ];
