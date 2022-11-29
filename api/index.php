@@ -18,8 +18,8 @@ switch ($message) {
     case '/start':
         $request = [
             [
-                $method = 'sendMessage';
-                $methodOptions = [
+                'method' = 'sendMessage';
+                'methodOptions' = [
                     'chat_id' => $chatId,
                     'parse_mode' => 'HTML',
                     'text' =>
@@ -40,8 +40,8 @@ switch ($message) {
                 ]
             ],
             [
-                $method = 'sendMessage';
-                $methodOptions = [
+                'method' = 'sendMessage';
+                'methodOptions' = [
                     'chat_id' => $chatId,
                     'parse_mode' => 'HTML',
                     'text' =>
@@ -112,7 +112,7 @@ switch ($message) {
 }
 
 foreach ($request as $ap) {
-    sendRequest($ap);
+    sendRequest($ap['method'], $ap['methodOptions']);
 }
 
 function sendRequest($method = [], $jsonData, $headers = []) {
