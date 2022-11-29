@@ -2,8 +2,8 @@
 const API_URL = "https://api.telegram.org/bot";
 const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
-$data = json_decode(file_get_contents('php://input'), true);
-$data = $data['callback_query'] ? $data['callback_query'] : $data['message'];
+$jsonData = json_decode(file_get_contents('php://input'), true);
+$data = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 $userMessage = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
 $chatId = $data['chat']['id'];
 $userName = $data['chat']['first_name'];
