@@ -1,4 +1,5 @@
 <?php
+
 const API_URL = "https://api.telegram.org/bot";
 const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
@@ -8,6 +9,7 @@ $jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonDat
 
 $message = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
 $chatId = $jsonData['chat']['id'];
+$messageId = $jsonData['message_id'];
 $userName = $jsonData['chat']['first_name'];
 
 switch ($message) {
@@ -31,6 +33,13 @@ switch ($message) {
                 ]
             ]
         ];
+
+    case 'удалить':
+        $method = 'deleteMessage';
+        $methodOptions = [
+            'chat_id' => $chatId,
+            'message_id' => $messageId
+        ];
     break;
 
     default:
@@ -45,8 +54,7 @@ switch ($message) {
 
 sendRequest($method, $methodOptions);
 
-function sendRequest($method, $jsonData, $headers = [])
-{
+function sendRequest($method, $jsonData, $headers = []) {
     $initializer = curl_init();
     
     curl_setopt_array($initializer, [
@@ -64,39 +72,3 @@ function sendRequest($method, $jsonData, $headers = [])
     
     return (json_decode($response, 1) ? json_decode($response, 1) : $response);
 }
-
-
-
-
-class DataBase {
-    private $pdo;
-
-    public function __construct() {
-        $this->connect();
-    }
-
-    public function connect() {
-        $dataSourse = "mysql:host=localhost;dbname=telegram_bot;charset=utf8;";
-        $this->pdo = new PDO($dataSourse, 'telegram_admin', 'b22Je26Yb4j');
-
-        return $this;
-    }
-    public function getData(string $sql) {
-        $request = $this->pdo->query($sql);
-        $result = $request->fetchAll(PDO::FETCH_ASSOC);
-
-        if(empty($result)) {
-            print('Записей не обнаружено');
-        }
-        return $result;
-    }
-    public function executeRequest(string $sql) {
-        $request = $this->pdo->prepare($sql);
-        return $request->execute();
-    }
-
-}
-
-$pdo = new DataBase();
-
-$patients = $pdo->getData("SELECT * FROM users");
