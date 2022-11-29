@@ -2,17 +2,16 @@
 const API_URL = "https://api.telegram.org/bot";
 const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
-$jsonData = json_decode(file_get_contents('php://input'), true);
-$jsonData = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
-
-$chatId = $jsonData['chat']['id'];
-$userName = $jsonData['chat']['first_name'];
-$userMessage = mb_strtolower(($jsonData['text'] ? $jsonData['text'] : $jsonData['data']),'utf-8');
+$data = json_decode(file_get_contents('php://input'), true);
+$data = $data['callback_query'] ? $data['callback_query'] : $data['message'];
+$userMessage = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
+$chatId = $data['chat']['id'];
+$userName = $data['chat']['first_name'];
 
 switch ($userMessage) {
     case '/start':
         $method = 'sendMessage';
-        $methodOptions = array(
+        $methodOptions = [
             'chat_id' => $chatId,
             'parse_mode' => 'HTML',
             'text' =>
@@ -20,16 +19,20 @@ switch ($userMessage) {
                 "Я бот <b>MirBellGet</b>." . PHP_EOL .
                 "Моя версия: {$version}" . PHP_EOL .
                 "Дата выпуска: {$releaseDate}",
-            'reply_markup' => array(
-                [
-                    ['text' => 'Услуги']
-                ],
-                [
-                    ['text' => 'О нас'],
-                    ['text' => 'Контакты']
+            'reply_markup' => [
+                'resize_keyboard' => true,
+                'keyboard' => [
+                    [
+                        ['text' => 'Услуги']
+                    ],
+                    [
+                        ['text' => 'О нас'],
+                        ['text' => 'Контакты']
+                    ]
                 ]
-            )
-        );
+            ]
+        ];
+    break;
 
     default:
         $method = 'sendMessage';
