@@ -33,7 +33,7 @@ switch ($userData['userMessage']) {
                 ]
             ]
         ];
-        sendRequest('sendDice', ['emoji' => ':robot_face:']);
+        sendRequest('sendDice', ['emoji' => ':robot:']);
     break;
 
     case 'о нас':
