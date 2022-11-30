@@ -4,8 +4,7 @@ const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
 function commandGetData() {
     $jsonData = json_decode(file_get_contents('php://input'), true);
-    $data = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
-    return $data;
+    return $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 }
 
 $data = commandGetData();
