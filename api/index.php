@@ -33,7 +33,7 @@ switch ($userData['userMessage']) {
                 ]
             ]
         ];
-        sendRequest('sendDice', ['chat_id' => $userData['chatId'], 'emoji' => "\u{1f916}"]);
+        sendRequest('sendMessage', ['text' => "Привет, <b>{$userData['userName']}</b>?"]);
     break;
 
     case 'о нас':
