@@ -1,30 +1,25 @@
 <?php
-
 const API_URL = "https://api.telegram.org/bot";
 const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
 function commandGetData() {
-    $jsonData = json_decode(file_get_contents('php://input'), true);
-    $data = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
-    return $data;
+    $data = json_decode(file_get_contents('php://input'), true);
+    return $data['callback_query'] ? $data['callback_query'] : $data['message'];
 }
 
 $data = commandGetData();
+$chat_id      = $data['chat']['id'];
+$user_name    = $data['chat']['first_name'];
+$user_message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
 
-$userData = array(
-    'chatId' => $data['chat']['id'],
-    'userName' => $data['chat']['first_name'],
-    'userMessage' => mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8')
-);
-
-switch ($userData['userMessage']) {
+switch ($user_message) {
     case '/start':
         $method = 'sendMessage';
         $methodOptions = [
-            'chat_id' => $userData['chatId'],
+            'chat_id' => $chat_id,
             'parse_mode' => 'HTML',
 
-            'text' => "Привет, <b>{$userData['userName']}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
+            'text' => "Привет, <b>{$user_name}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
 
             'reply_markup' => [
                 'resize_keyboard' => true,
@@ -40,13 +35,13 @@ switch ($userData['userMessage']) {
             ]
         ];
         
-    sendRequest('sendMessage', ['chat_id' => $userData['chatId'], 'text' => "Привет?"]);
+    sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => "Привет?"]);
     break;
 
     case 'о нас':
         $method = 'sendMessage';
         $methodOptions = [
-            'chat_id' => $userData['chatId'],
+            'chat_id' => $chat_id,
             'parse_mode' => 'HTML',
             'text' =>
                 "<b>О компании</b>"
@@ -58,7 +53,7 @@ switch ($userData['userMessage']) {
     case 'контакты':
         $method = 'sendContact';
         $methodOptions = [
-            'chat_id' => $userData['chatId'],
+            'chat_id' => $chat_id,
             'phone_number' => '8(900)000-00-00',
             'first_name' => 'Имя',
             'last_name' => 'Фамилия'
@@ -68,13 +63,12 @@ switch ($userData['userMessage']) {
     default:
         $method = 'sendMessage';
         $methodOptions = [
-            'chat_id' => $userData['chatId'],
+            'chat_id' => $chat_id,
             'parse_mode' => 'HTML',
             'text' => "Хз"
         ];
     break;
 }
-
 sendRequest($method, $methodOptions);
 
 function sendRequest($method, $jsonData, $headers = []) {
