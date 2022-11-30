@@ -75,7 +75,7 @@ switch ($user_message) {
 }
 sendRequest($method, $methodOptions);
 
-function sendRequest($method, $jsonData, $headers = []) {
+function sendRequest($method, $jsonData) {
     $initializer = curl_init();
     
     curl_setopt_array($initializer, [
@@ -85,7 +85,7 @@ function sendRequest($method, $jsonData, $headers = []) {
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CONNECTTIMEOUT => 10,
         CURLOPT_POSTFIELDS => json_encode($jsonData),
-        CURLOPT_HTTPHEADER => array_merge(array("Content-Type: application/json"), $headers)
+        CURLOPT_HTTPHEADER => array("Content-Type: application/json")
     ]);   
     
     $response = curl_exec($initializer);
