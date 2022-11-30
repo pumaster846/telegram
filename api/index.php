@@ -19,7 +19,7 @@ class Bot {
     public function getUserName() {
         return $this->user_name;
     }
-    public function commandSendRequest(string $method, array $methodOptions = []) {
+    public function commandSendRequest(string $method, array $methodOptions) {
         $initializer = curl_init();
         
         curl_setopt_array($initializer, [
