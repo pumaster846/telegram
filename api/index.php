@@ -3,11 +3,11 @@ const API_URL = "https://api.telegram.org/bot";
 const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
 function commandGetData() {
-    $jsonData = json_decode(file_get_contents('php://input'), true);
-    return $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
+
 }
 
-$data = commandGetData();
+$jsonData = json_decode(file_get_contents('php://input'), true);
+$data = $jsonData['callback_query'] ? $jsonData['callback_query'] : $jsonData['message'];
 $chat_id      = $data['chat']['id'];
 $user_name    = $data['chat']['first_name'];
 $user_message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
