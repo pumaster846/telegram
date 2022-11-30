@@ -80,12 +80,10 @@ function sendRequest($method, $jsonData) {
     
     curl_setopt_array($initializer, [
         CURLOPT_POST => true,
-        CURLOPT_HEADER => false,
         CURLOPT_URL => API_URL . API_TOKEN . '/' . $method,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CONNECTTIMEOUT => 10,
-        CURLOPT_POSTFIELDS => json_encode($jsonData),
-        CURLOPT_HTTPHEADER => array("Content-Type: application/json")
+        CURLOPT_POSTFIELDS => json_encode($jsonData)
     ]);   
     
     $response = curl_exec($initializer);
