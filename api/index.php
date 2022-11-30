@@ -5,6 +5,7 @@ const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 class Bot {
     protected $chat_id;
     protected $user_name;
+    protected $user_message;
 
     public function commandSetData() {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -19,7 +20,10 @@ class Bot {
     public function getUserName() {
         return $this->user_name;
     }
-    public function commandSendRequest(string $method, array $methodOptions) {
+    public function getUserMessage() {
+        return $this->user_message;
+    }
+    public function commandSendRequest(string $method, array $methodOptions = []) {
         $initializer = curl_init();
         
         curl_setopt_array($initializer, [
@@ -46,7 +50,7 @@ $bot->commandSetData();
 // $user_name    = $data['chat']['first_name'];
 // $user_message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
 
-switch ($user_message) {
+switch ($bot->getUserMessage()) {
     case '/start':
         $method = 'sendMessage';
         $methodOptions = [
