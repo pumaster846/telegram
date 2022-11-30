@@ -12,7 +12,7 @@ class Bot {
         return $data['callback_query'] ? $data['callback_query'] : $data['message'];   
     }
     public function setData() {
-        $data = $this->commandGetData();
+        $data = $this->getData();
         
         $this->chat_id = $data['chat']['id'];
         $this->user_name = $data['chat']['first_name'];
