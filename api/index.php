@@ -17,10 +17,10 @@ switch ($userData['userMessage']) {
     case '/start':
         $method = 'sendMessage';
         $methodOptions = [
-            'chat_id' => $userData['chatId'],
+            'chat_id' => $chat_id,
             'parse_mode' => 'HTML',
 
-            'text' => "Привет, <b>{$userData['userName']}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
+            'text' => "Привет, <b>{$userName]}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
 
             'reply_markup' => [
                 'resize_keyboard' => true,
@@ -36,13 +36,13 @@ switch ($userData['userMessage']) {
             ]
         ];
         
-sendRequest('sendMessage', ['chat_id' => $userData['chatId'], 'text' => "Привет?"]);
+sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => "Привет?"]);
     break;
 
     case 'о нас':
         $method = 'sendMessage';
         $methodOptions = [
-            'chat_id' => $userData['chatId'],
+            'chat_id' => $chat_id,
             'parse_mode' => 'HTML',
             'text' =>
                 "<b>О компании</b>"
@@ -54,7 +54,7 @@ sendRequest('sendMessage', ['chat_id' => $userData['chatId'], 'text' => "При�
     case 'контакты':
         $method = 'sendContact';
         $methodOptions = [
-            'chat_id' => $userData['chatId'],
+            'chat_id' => $chat_id,
             'phone_number' => '8(900)000-00-00',
             'first_name' => 'Имя',
             'last_name' => 'Фамилия'
@@ -64,7 +64,7 @@ sendRequest('sendMessage', ['chat_id' => $userData['chatId'], 'text' => "При�
     default:
         $method = 'sendMessage';
         $methodOptions = [
-            'chat_id' => $userData['chatId'],
+            'chat_id' => $chat_id,
             'parse_mode' => 'HTML',
             'text' => "Хз"
         ];
