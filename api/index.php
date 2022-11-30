@@ -33,6 +33,8 @@ switch ($userData['userMessage']) {
                 ]
             ]
         ];
+        
+sendRequest('sendMessage', ['chat_id' => $userData['chatId'], 'text' => "Привет?"]);
     break;
 
     case 'о нас':
@@ -68,7 +70,6 @@ switch ($userData['userMessage']) {
 }
 
 sendRequest($method, $methodOptions);
-sendRequest('sendMessage', ['text' => "Привет?"]);
 
 function sendRequest($method, $jsonData, $headers = []) {
     $initializer = curl_init();
