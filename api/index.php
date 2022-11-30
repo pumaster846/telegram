@@ -98,15 +98,11 @@ class Bot {
                     'text' => "Хз"
                 ];
             break;
-            $this->commandSendRequest($method, $methodOptions);
         }
+        $this->commandSendRequest($method, $methodOptions);
     }
 }
 
 $bot  = new Bot();
 $bot->commandSetData();
 $bot->commandBuildRequest();
-
-// $chat_id      = $data['chat']['id'];
-// $user_name    = $data['chat']['first_name'];
-// $user_message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
