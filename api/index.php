@@ -7,21 +7,16 @@ class Bot {
     protected $user_name;
     protected $user_message;
 
-    public function commandSetData() {
+    public function getData() {
         $data = json_decode(file_get_contents('php://input'), true);
-        $data = $data['callback_query'] ? $data['callback_query'] : $data['message'];
+        return $data['callback_query'] ? $data['callback_query'] : $data['message'];   
+    }
+    public function setData() {
+        $data = $this->commandGetData();
+        
         $this->chat_id = $data['chat']['id'];
         $this->user_name = $data['chat']['first_name'];
         $this->user_message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
-    }
-    public function getChatId() {
-        return $this->chat_id;
-    }
-    public function getUserName() {
-        return $this->user_name;
-    }
-    public function getUserMessage() {
-        return $this->user_message;
     }
     public function commandSendRequest(string $method, array $methodOptions = []) {
         $initializer = curl_init();
@@ -103,6 +98,6 @@ class Bot {
     }
 }
 
-$bot  = new Bot();
-$bot->commandSetData();
+$bot = new Bot();
+$bot->setData();
 $bot->commandBuildRequest();
