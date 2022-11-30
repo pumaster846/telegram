@@ -79,11 +79,13 @@ function sendRequest($method, $jsonData) {
     $initializer = curl_init();
     
     curl_setopt_array($initializer, [
-        CURLOPT_POST => true,
-        CURLOPT_URL => API_URL . API_TOKEN . '/' . $method,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CONNECTTIMEOUT => 10,
-        CURLOPT_POSTFIELDS => json_encode($jsonData)
+            CURLOPT_POST => true,
+            CURLOPT_HEADER => false,
+            CURLOPT_URL => API_URL . API_TOKEN . '/' . $method,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_POSTFIELDS => json_encode($methodOptions),
+            CURLOPT_HTTPHEADER => array("Content-Type: application/json")
     ]);   
     
     $response = curl_exec($initializer);
