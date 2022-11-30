@@ -18,10 +18,7 @@ switch ($userData['userMessage']) {
             'chat_id' => $userData['chatId'],
             'parse_mode' => 'HTML',
 
-            'text' => "Привет, <b>{$userData['userName']}</b>!
-                       Я бот <b>MirBellGet</b>.
-                       Моя версия: {$version}.
-                       Дата выпуска: {$releaseDate}",
+            'text' => "Привет, <b>{$userData['userName']}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
 
             'reply_markup' => [
                 'resize_keyboard' => true,
@@ -36,6 +33,7 @@ switch ($userData['userMessage']) {
                 ]
             ]
         ];
+        sendRequest('sendDice', ['emoji' => ':robot_face:']);
     break;
 
     case 'о нас':
@@ -65,8 +63,7 @@ switch ($userData['userMessage']) {
         $methodOptions = [
             'chat_id' => $userData['chatId'],
             'parse_mode' => 'HTML',
-            'text' =>
-                "Хз"
+            'text' => "Хз"
         ];
     break;
 }
