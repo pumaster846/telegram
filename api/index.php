@@ -41,70 +41,72 @@ class Bot {
         
         return (json_decode($response, 1) ? json_decode($response, 1) : $response);
     }
+    public function commandBuildRequest() {
+        switch ($this->user_message) {
+            case '/start':
+                $method = 'sendMessage';
+                $methodOptions = [
+                    'chat_id' => $this->chat_id,
+                    'parse_mode' => 'HTML',
+        
+                    'text' => "Привет, <b>{$this->user_name}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
+        
+                    'reply_markup' => [
+                        'resize_keyboard' => true,
+                        'keyboard' => [
+                            [
+                                ['text' => 'Услуги']
+                            ],
+                            [
+                                ['text' => 'О нас'],
+                                ['text' => 'Контакты']
+                            ]
+                        ]
+                    ]
+                ];
+                
+                $this->commandSendRequest('sendMessage', ['chat_id' => $this->chat_id, 'text' => "Привет?"]);
+            break;
+        
+            case 'о нас':
+                $method = 'sendMessage';
+                $methodOptions = [
+                    'chat_id' => $this->chat_id,
+                    'parse_mode' => 'HTML',
+                    'text' =>
+                        "<b>О компании</b>"
+                        . PHP_EOL . "" . PHP_EOL .
+                        "Информация о компании"
+                ];
+            break;
+        
+            case 'контакты':
+                $method = 'sendContact';
+                $methodOptions = [
+                    'chat_id' => $this->chat_id,
+                    'phone_number' => '8(900)000-00-00',
+                    'first_name' => 'Имя',
+                    'last_name' => 'Фамилия'
+                ];
+            break;
+        
+            default:
+                $method = 'sendMessage';
+                $methodOptions = [
+                    'chat_id' => $this->chat_id,
+                    'parse_mode' => 'HTML',
+                    'text' => "Хз"
+                ];
+            break;
+            $this->commandSendRequest($method, $methodOptions);
+        }
+    }
 }
 
 $bot  = new Bot();
 $bot->commandSetData();
+$bot->commandBuildRequest();
 
 // $chat_id      = $data['chat']['id'];
 // $user_name    = $data['chat']['first_name'];
 // $user_message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
-
-switch ($bot->getUserMessage()) {
-    case '/start':
-        $method = 'sendMessage';
-        $methodOptions = [
-            'chat_id' => $bot->getChatId(),
-            'parse_mode' => 'HTML',
-
-            'text' => "Привет, <b>{$bot->getUserName()}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
-
-            'reply_markup' => [
-                'resize_keyboard' => true,
-                'keyboard' => [
-                    [
-                        ['text' => 'Услуги']
-                    ],
-                    [
-                        ['text' => 'О нас'],
-                        ['text' => 'Контакты']
-                    ]
-                ]
-            ]
-        ];
-        
-        $bot->commandSendRequest('sendMessage', ['chat_id' => $bot->getChatId(), 'text' => "Привет?"]);
-    break;
-
-    case 'о нас':
-        $method = 'sendMessage';
-        $methodOptions = [
-            'chat_id' => $bot->getChatId(),
-            'parse_mode' => 'HTML',
-            'text' =>
-                "<b>О компании</b>"
-                . PHP_EOL . "" . PHP_EOL .
-                "Информация о компании"
-        ];
-    break;
-
-    case 'контакты':
-        $method = 'sendContact';
-        $methodOptions = [
-            'chat_id' => $bot->getChatId(),
-            'phone_number' => '8(900)000-00-00',
-            'first_name' => 'Имя',
-            'last_name' => 'Фамилия'
-        ];
-    break;
-
-    default:
-        $method = 'sendMessage';
-        $methodOptions = [
-            'chat_id' => $bot->getChatId(),
-            'parse_mode' => 'HTML',
-            'text' => "Хз"
-        ];
-    break;
-}
-$bot->commandSendRequest($method, $methodOptions);
