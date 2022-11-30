@@ -17,11 +17,12 @@ switch ($userData['userMessage']) {
         $methodOptions = [
             'chat_id' => $userData['chatId'],
             'parse_mode' => 'HTML',
-            'text' =>
-                "Привет, <b>{$userData['userName']}</b>!" . PHP_EOL .
-                "Я бот <b>MirBellGet</b>." . PHP_EOL .
-                "Моя версия: {$version}" . PHP_EOL .
-                "Дата выпуска: {$releaseDate}",
+
+            'text' => "Привет, <b>{$userData['userName']}</b>!
+                       Я бот <b>MirBellGet</b>.
+                       Моя версия: {$version}.
+                       Дата выпуска: {$releaseDate}",
+
             'reply_markup' => [
                 'resize_keyboard' => true,
                 'keyboard' => [
@@ -34,6 +35,28 @@ switch ($userData['userMessage']) {
                     ]
                 ]
             ]
+        ];
+    break;
+
+    case 'о нас':
+        $method = 'sendMessage';
+        $methodOptions = [
+            'chat_id' => $chatId,
+            'parse_mode' => 'HTML',
+            'text' =>
+                "<b>О компании</b>"
+                . PHP_EOL . "" . PHP_EOL .
+                "Информация о компании"
+        ];
+    break;
+
+    case 'контакты':
+        $method = 'sendContact';
+        $methodOptions = [
+            'chat_id' => $chatId,
+            'phone_number' => '8(900)000-00-00',
+            'first_name' => 'Имя',
+            'last_name' => 'Фамилия'
         ];
     break;
 
