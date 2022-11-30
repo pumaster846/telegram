@@ -41,7 +41,7 @@ switch ($userData['userMessage']) {
     case 'о нас':
         $method = 'sendMessage';
         $methodOptions = [
-            'chat_id' => $chatId,
+            'chat_id' => $userData['chatId'],
             'parse_mode' => 'HTML',
             'text' =>
                 "<b>О компании</b>"
@@ -53,7 +53,7 @@ switch ($userData['userMessage']) {
     case 'контакты':
         $method = 'sendContact';
         $methodOptions = [
-            'chat_id' => $chatId,
+            'chat_id' => $userData['chatId'],
             'phone_number' => '8(900)000-00-00',
             'first_name' => 'Имя',
             'last_name' => 'Фамилия'
