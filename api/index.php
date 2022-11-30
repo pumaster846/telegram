@@ -75,7 +75,7 @@ switch ($user_message) {
 }
 sendRequest($method, $methodOptions);
 
-function sendRequest($method, $jsonData) {
+function sendRequest($method, $methodOptions) {
     $initializer = curl_init();
     
     curl_setopt_array($initializer, [
