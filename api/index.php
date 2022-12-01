@@ -24,7 +24,6 @@ class Bot {
         
         curl_setopt_array($initializer, [
             CURLOPT_POST => true,
-            CURLOPT_HEADER => false,
             CURLOPT_URL => API_URL . API_TOKEN . '/' . $method,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => 10,
