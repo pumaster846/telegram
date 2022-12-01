@@ -77,7 +77,7 @@ switch ($bot->getUserMessage()) {
             )
         );
         $bot->sendRequest('sendMessage', $methodOptions);
-        $bot->sendRequest('sendMessage', ['chat_id' => $bot->getChatId(), 'text' => hex2bin('F09FA496')]);
+        $bot->sendRequest('sendMessage', ['chat_id' => $bot->getChatId(), 'text' => 'u\F09FA496']);
     break;
 
     case 'о нас':
