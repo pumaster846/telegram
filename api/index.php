@@ -22,18 +22,18 @@ class Bot {
     public function commandSendRequest(string $method, array $methodOptions = []) {
         $initializer = curl_init();
         
-        curl_setopt_array($initializer, [
-            CURLOPT_POST => true,
+        curl_setopt_array($initializer, array(
             CURLOPT_URL => API_URL . API_TOKEN . '/' . $method,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => 10,
             CURLOPT_POSTFIELDS => json_encode($methodOptions),
             CURLOPT_HTTPHEADER => array("Content-Type: application/json")
-        ]);
+        ));
         
-        $response = curl_exec($initializer);
+        curl_exec($initializer);
         curl_close($initializer);
-        
+
+        // $response = curl_exec($initializer);
         // return (json_decode($response, 1) ? json_decode($response, 1) : $response);
     }
     public function commandBuildRequest() {
