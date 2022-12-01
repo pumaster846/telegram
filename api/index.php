@@ -4,10 +4,14 @@ const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
 class Bot {
     protected int $chat_id;
+    protected string $user_name;
     protected string $user_message;
 
     public function getChatId() {
         return $this->chat_id;
+    }
+    public function getUserName() {
+        return $this->user_name;
     }
     public function getUserMessage() {
         return $this->user_message;
@@ -21,6 +25,7 @@ class Bot {
         $data = self::getJsonData();
 
         $this->chat_id      = $data['chat']['id'];
+        $this->user_name    = $data['from']['first_name'];
         $this->user_message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
     }
 
@@ -50,16 +55,14 @@ class Bot {
 }
 
 $bot = new Bot();
-$data = $bot->setJsonData();
-
-$user_name = $data['from']['first_name'];
+$bot->setJsonData();
 
 switch ($bot->getUserMessage()) {
     case '/start':
         $methodOptions = array(
             'chat_id' => $bot->getChatId(),
             'parse_mode' => 'HTML',
-            'text' => "Добрый день, <b>{$user_name}</b>!" . PHP_EOL . "Я бот <b>...</b>",
+            'text' => "Добрый день, <b>{$bot->getUserName()}</b>!" . PHP_EOL . "Я бот <b>...</b>",
             'reply_markup' => array(
             'resize_keyboard' => true,
                 'keyboard' => array(
@@ -100,7 +103,7 @@ switch ($bot->getUserMessage()) {
         $methodOptions = array(
             'chat_id' => $bot->getChatId(),
             'parse_mode' => 'HTML',
-            'text' => "<b>{$user_name}</b>, я не знаю такой команды"
+            'text' => "<b>{$bot->getUserName()}</b>, я не знаю такой команды"
         );
         $bot->sendRequest('sendMessage', $methodOptions);
     break;
