@@ -11,17 +11,16 @@ class Bot {
         return $this->chat_id;
     }
     public function getUserName() {
-        return "<b>" . $this->user_name . "</b>";
+        return $this->user_name;
     }
     public function getUserMessage() {
         return $this->user_message;
     }
 
-    public function getJsonData() {
+    protected function getJsonData() {
         $data = json_decode(file_get_contents('php://input'), true);
         return $data['callback_query'] ? $data['callback_query'] : $data['message'];
     }
-
     public function setJsonData() {
         $data = self::getJsonData();
 
@@ -63,10 +62,10 @@ switch ($bot->getUserMessage()) {
         $methodOptions = array(
             'chat_id' => $bot->getChatId(),
             'parse_mode' => 'HTML',
-            'text' => "Добрый день, {$bot->getUserName()}!" . PHP_EOL . "Я бот <b>MirBellGet</b>",
-            'reply_markup' => [
-                'resize_keyboard' => true,
-                'keyboard' => [
+            'text' => "Добрый день, <b>{$bot->getUserName()}</b>!" . PHP_EOL . "Я бот <b>...</b>",
+            'reply_markup' => array(
+            'resize_keyboard' => true,
+                'keyboard' => array(
                     [
                         ['text' => 'Услуги']
                     ],
@@ -74,8 +73,8 @@ switch ($bot->getUserMessage()) {
                         ['text' => 'О нас'],
                         ['text' => 'Контакты']
                     ]
-                ]
-            ]
+                )
+            )
         );
         $bot->sendRequest('sendMessage', $methodOptions);
         $bot->sendRequest('sendMessage', ['chat_id' => $bot->getChatId(), 'text' => "Смайл"]);
@@ -104,7 +103,7 @@ switch ($bot->getUserMessage()) {
         $methodOptions = array(
             'chat_id' => $bot->getChatId(),
             'parse_mode' => 'HTML',
-            'text' => "{$bot->getUserName()}, я не знаю такой команды"
+            'text' => "<b>{$bot->getUserName()}</b>, я не знаю такой команды"
         );
         $bot->sendRequest('sendMessage', $methodOptions);
     break;
