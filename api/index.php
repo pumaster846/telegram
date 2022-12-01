@@ -11,7 +11,7 @@ class Bot {
         return $this->chat_id;
     }
     public function getUserName() {
-        return $this->user_name;
+        return "<b>" . $this->user_name . "</b>";
     }
     public function getUserMessage() {
         return $this->user_message;
@@ -63,7 +63,7 @@ switch ($bot->getUserMessage()) {
         $methodOptions = array(
             'chat_id' => $bot->getChatId(),
             'parse_mode' => 'HTML',
-            'text' => "Добрый день, <b>{$bot->getUserName()}</b>!" . PHP_EOL . "Я бот <b>MirBellGet</b>",
+            'text' => "Добрый день, {$bot->getUserName()}!" . PHP_EOL . "Я бот <b>MirBellGet</b>",
             'reply_markup' => [
                 'resize_keyboard' => true,
                 'keyboard' => [
@@ -97,14 +97,14 @@ switch ($bot->getUserMessage()) {
             'first_name' => 'Имя',
             'last_name' => 'Фамилия'
         );
-        $bot->sendRequest('sendMessage', $methodOptions);
+        $bot->sendRequest('sendContact', $methodOptions);
     break;
 
     default:
         $methodOptions = array(
             'chat_id' => $bot->getChatId(),
             'parse_mode' => 'HTML',
-            'text' => "<b>{$bot->getUserName()}</b>, я не знаю такой команды"
+            'text' => "{$bot->getUserName()}, я не знаю такой команды"
         );
         $bot->sendRequest('sendMessage', $methodOptions);
     break;
