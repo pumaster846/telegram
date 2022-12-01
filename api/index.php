@@ -23,7 +23,7 @@ class Bot {
     }
 
     public function commandSetData() {
-$data = getJsonData();
+$data = self::getJsonData();
         
         $this->chat_id = $data['chat']['id'];
         $this->user_name = $data['chat']['first_name'];
