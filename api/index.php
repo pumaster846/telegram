@@ -6,10 +6,15 @@ class Bot {
     protected int $chat_id;
     protected string $user_name;
     protected string $user_message;
+    
+    public function getJsonData() {
+        $data = json_decode(file_get_contents('php://input'), true);
+        return $data['callback_query'] ? $data['callback_query'] : $data['message'];
+    }
 
     public function commandSetData() {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $data = $data['callback_query'] ? $data['callback_query'] : $data['message'];
+        $data = self::getJsonData();
+        
         $this->chat_id = $data['chat']['id'];
         $this->user_name = $data['chat']['first_name'];
         $this->user_message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
