@@ -18,12 +18,12 @@ class Bot {
     }
     
     public function getJsonData() {
-        $data = json_decode(file_get_contents('php://input'), true);
-        return $data['callback_query'] ? $data['callback_query'] : $data['message'];
+
     }
 
     public function commandSetData() {
-        $data = self::getJsonData();
+        $data = json_decode(file_get_contents('php://input'), true);
+        $data = $data['callback_query'] ? $data['callback_query'] : $data['message'];
         
         $this->chat_id = $data['chat']['id'];
         $this->user_name = $data['chat']['first_name'];
