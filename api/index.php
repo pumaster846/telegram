@@ -7,6 +7,16 @@ class Bot {
     protected string $user_name;
     protected string $user_message;
     
+    public function getChatId() {
+        return $this->chat_id;
+    }
+    public function getUserName() {
+        return $this->user_name;
+    }
+    public function getUserMessage() {
+        return $this->user_message;
+    }
+    
     public function getJsonData() {
         $data = json_decode(file_get_contents('php://input'), true);
         return $data['callback_query'] ? $data['callback_query'] : $data['message'];
@@ -45,14 +55,14 @@ class Bot {
 $bot = new Bot();
 $bot->commandSetData();
 
-switch ($bot->user_message) {
+switch ($bot->getUserMessage()) {
             case '/start':
                 $method = 'sendMessage';
                 $methodOptions = [
-                    'chat_id' => $bot->chat_id,
+                    'chat_id' => $bot->getChatId(),
                     'parse_mode' => 'HTML',
         
-                    'text' => "Привет, <b>{$bot->user_name}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
+                    'text' => "Привет, <b>{$bot->getUserName()}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
         
                     'reply_markup' => [
                         'resize_keyboard' => true,
@@ -67,13 +77,13 @@ switch ($bot->user_message) {
                         ]
                     ]
                 ];
-                $this->commandSendRequest('sendMessage', ['chat_id' => $bot->chat_id, 'text' => "Привет?"]);
+                $this->commandSendRequest('sendMessage', ['chat_id' => $bot->getChatId(), 'text' => "Привет?"]);
             break;
         
             case 'о нас':
                 $method = 'sendMessage';
                 $methodOptions = [
-                    'chat_id' => $bot->chat_id,
+                    'chat_id' => $bot->getChatId(),
                     'parse_mode' => 'HTML',
                     'text' =>
                         "<b>О компании</b>"
@@ -85,7 +95,7 @@ switch ($bot->user_message) {
             case 'контакты':
                 $method = 'sendContact';
                 $methodOptions = [
-                    'chat_id' => $bot->chat_id,
+                    'chat_id' => $bot->getChatId(),
                     'phone_number' => '8(900)000-00-00',
                     'first_name' => 'Имя',
                     'last_name' => 'Фамилия'
@@ -95,7 +105,7 @@ switch ($bot->user_message) {
             default:
                 $method = 'sendMessage';
                 $methodOptions = [
-                    'chat_id' => $bot->chat_id,
+                    'chat_id' => $bot->getChatId(),
                     'parse_mode' => 'HTML',
                     'text' => "Хз"
                 ];
