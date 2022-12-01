@@ -77,7 +77,7 @@ switch ($bot->getUserMessage()) {
                         ]
                     ]
                 ];
-                $this->commandSendRequest('sendMessage', ['chat_id' => $bot->getChatId(), 'text' => "Привет?"]);
+                $bot->commandSendRequest('sendMessage', ['chat_id' => $bot->getChatId(), 'text' => "Привет?"]);
             break;
         
             case 'о нас':
@@ -111,4 +111,4 @@ switch ($bot->getUserMessage()) {
                 ];
             break;
         }
-        $this->commandSendRequest($method, $methodOptions);
+        $bot->commandSendRequest($method, $methodOptions);
