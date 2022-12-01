@@ -38,14 +38,21 @@ class Bot {
         return (json_decode($response, 1) ? json_decode($response, 1) : $response);
     }
     public function commandBuildRequest() {
-        switch ($this->user_message) {
+        
+    }
+}
+
+$bot = new Bot();
+$bot->commandSetData();
+
+switch ($bot->user_message) {
             case '/start':
                 $method = 'sendMessage';
                 $methodOptions = [
-                    'chat_id' => $this->chat_id,
+                    'chat_id' => $bot->chat_id,
                     'parse_mode' => 'HTML',
         
-                    'text' => "Привет, <b>{$this->user_name}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
+                    'text' => "Привет, <b>{$bot->user_name}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
         
                     'reply_markup' => [
                         'resize_keyboard' => true,
@@ -60,13 +67,13 @@ class Bot {
                         ]
                     ]
                 ];
-                $this->commandSendRequest('sendMessage', ['chat_id' => $this->chat_id, 'text' => "Привет?"]);
+                $this->commandSendRequest('sendMessage', ['chat_id' => $bot->chat_id, 'text' => "Привет?"]);
             break;
         
             case 'о нас':
                 $method = 'sendMessage';
                 $methodOptions = [
-                    'chat_id' => $this->chat_id,
+                    'chat_id' => $bot->chat_id,
                     'parse_mode' => 'HTML',
                     'text' =>
                         "<b>О компании</b>"
@@ -78,7 +85,7 @@ class Bot {
             case 'контакты':
                 $method = 'sendContact';
                 $methodOptions = [
-                    'chat_id' => $this->chat_id,
+                    'chat_id' => $bot->chat_id,
                     'phone_number' => '8(900)000-00-00',
                     'first_name' => 'Имя',
                     'last_name' => 'Фамилия'
@@ -88,16 +95,10 @@ class Bot {
             default:
                 $method = 'sendMessage';
                 $methodOptions = [
-                    'chat_id' => $this->chat_id,
+                    'chat_id' => $bot->chat_id,
                     'parse_mode' => 'HTML',
                     'text' => "Хз"
                 ];
             break;
         }
         $this->commandSendRequest($method, $methodOptions);
-    }
-}
-
-$bot = new Bot();
-$bot->commandSetData();
-$bot->commandBuildRequest();
