@@ -19,7 +19,8 @@ class Bot {
         $this->user_name    = $data['from']['first_name'];
         $this->user_message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
     }
-    public function sendRequest(string $method, array $methodOptions) {
+
+    public function sendRequest(string $method, array $methodOptions = []) {
         $initializer = curl_init();
         
         curl_setopt_array($initializer, array(
@@ -35,71 +36,66 @@ class Bot {
         curl_exec($initializer);
         curl_close($initializer);
 
-        // $response = curl_exec($initializer);
-        // return (json_decode($response, 1) ? json_decode($response, 1) : $response);
+        /*
+            $response = curl_exec($initializer);
+            return (json_decode($response, 1) ? json_decode($response, 1) : $response);
+        */
     }
-    public function commandBuildRequest() {
-        switch ($this->user_message) {
-            case '/start':
-                $method = 'sendMessage';
-                $methodOptions = [
-                    'chat_id' => $this->chat_id,
-                    'parse_mode' => 'HTML',
-        
-                    'text' => "Привет, <b>{$this->user_name}</b>! Я бот <b>MirBellGet</b>. Моя версия: {$version}. Дата выпуска: {$releaseDate}",
-        
-                    'reply_markup' => [
-                        'resize_keyboard' => true,
-                        'keyboard' => [
-                            [
-                                ['text' => 'Услуги']
-                            ],
-                            [
-                                ['text' => 'О нас'],
-                                ['text' => 'Контакты']
-                            ]
-                        ]
-                    ]
-                ];
-                
-                $this->sendRequest('sendMessage', ['chat_id' => $this->chat_id, 'text' => "Привет?"]);
-            break;
-        
-            case 'о нас':
-                $method = 'sendMessage';
-                $methodOptions = [
-                    'chat_id' => $this->chat_id,
-                    'parse_mode' => 'HTML',
-                    'text' =>
-                        "<b>О компании</b>"
-                        . PHP_EOL . "" . PHP_EOL .
-                        "Информация о компании"
-                ];
-            break;
-        
-            case 'контакты':
-                $method = 'sendContact';
-                $methodOptions = [
-                    'chat_id' => $this->chat_id,
-                    'phone_number' => '8(900)000-00-00',
-                    'first_name' => 'Имя',
-                    'last_name' => 'Фамилия'
-                ];
-            break;
-        
-            default:
-                $method = 'sendMessage';
-                $methodOptions = [
-                    'chat_id' => $this->chat_id,
-                    'parse_mode' => 'HTML',
-                    'text' => "Хз"
-                ];
-            break;
-        }
-        $this->sendRequest($method, $methodOptions);
-    }
+
+    public function setWebhook() {}
 }
 
 $bot = new Bot();
-$bot->setJsonData();
-$bot->commandBuildRequest();
+
+switch ($bot->user_message) {
+    case '/start':
+        $methodOptions = array(
+            'chat_id' => $bot->chat_id,
+            'parse_mode' => 'HTML',
+            'text' => "Добрый день, <b>{$bot->user_name}</b>!" . PHP_EOL . "Я бот <b>MirBellGet</b>",
+            'reply_markup' => [
+                'resize_keyboard' => true,
+                'keyboard' => [
+                    [
+                        ['text' => 'Услуги']
+                    ],
+                    [
+                        ['text' => 'О нас'],
+                        ['text' => 'Контакты']
+                    ]
+                ]
+            ]
+        );
+
+        sendRequest('sendMessage', $methodOptions);
+        sendRequest('sendMessage', ['chat_id' => $bot->chat_id, 'text' => "Смайл"]);
+    break;
+
+    case 'о нас':
+        $methodOptions = [
+            'chat_id' => $bot->chat_id,
+            'parse_mode' => 'HTML',
+            'text' => "<b>О компании</b>" . PHP_EOL . "" . PHP_EOL . "Информация о компании"
+        ];
+        sendRequest('sendMessage', $methodOptions);
+    break;
+
+    case 'контакты':
+        $methodOptions = [
+            'chat_id' => $bot->chat_id,
+            'phone_number' => '8(900)000-00-00',
+            'first_name' => 'Имя',
+            'last_name' => 'Фамилия'
+        ];
+        sendRequest('sendMessage', $methodOptions);
+    break;
+
+    default:
+        $method = 'sendMessage';
+        $methodOptions = [
+            'chat_id' => $bot->chat_id,
+            'parse_mode' => 'HTML',
+            'text' => "Я не знаю такой команды"
+        ];
+    break;
+}
