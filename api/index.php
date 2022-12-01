@@ -7,6 +7,16 @@ class Bot {
     protected string $user_name;
     protected string $user_message;
 
+    public function getChatId() {
+        return $this->chat_id;
+    }
+    public function getUserName() {
+        return $this->user_name;
+    }
+    public function getUserMessage() {
+        return $this->user_message;
+    }
+
     public function getJsonData() {
         $data = json_decode(file_get_contents('php://input'), true);
         return $data['callback_query'] ? $data['callback_query'] : $data['message'];
@@ -47,12 +57,12 @@ class Bot {
 
 $bot = new Bot();
 
-switch ($bot->user_message) {
+switch ($bot->getUserMessage()) {
     case '/start':
         $methodOptions = array(
-            'chat_id' => $bot->chat_id,
+            'chat_id' => $bot->getChatId(),
             'parse_mode' => 'HTML',
-            'text' => "Добрый день, <b>{$bot->user_name}</b>!" . PHP_EOL . "Я бот <b>MirBellGet</b>",
+            'text' => "Добрый день, <b>{$bot->getUserName()}</b>!" . PHP_EOL . "Я бот <b>MirBellGet</b>",
             'reply_markup' => [
                 'resize_keyboard' => true,
                 'keyboard' => [
@@ -68,34 +78,34 @@ switch ($bot->user_message) {
         );
 
         sendRequest('sendMessage', $methodOptions);
-        sendRequest('sendMessage', ['chat_id' => $bot->chat_id, 'text' => "Смайл"]);
+        sendRequest('sendMessage', ['chat_id' => $bot->getChatId(), 'text' => "Смайл"]);
     break;
 
     case 'о нас':
-        $methodOptions = [
-            'chat_id' => $bot->chat_id,
+        $methodOptions = array(
+            'chat_id' => $bot->getChatId(),
             'parse_mode' => 'HTML',
             'text' => "<b>О компании</b>" . PHP_EOL . "" . PHP_EOL . "Информация о компании"
-        ];
+        );
         sendRequest('sendMessage', $methodOptions);
     break;
 
     case 'контакты':
-        $methodOptions = [
-            'chat_id' => $bot->chat_id,
+        $methodOptions = array(
+            'chat_id' => $bot->getChatId(),
             'phone_number' => '8(900)000-00-00',
             'first_name' => 'Имя',
             'last_name' => 'Фамилия'
-        ];
+        );
         sendRequest('sendMessage', $methodOptions);
     break;
 
     default:
         $method = 'sendMessage';
-        $methodOptions = [
-            'chat_id' => $bot->chat_id,
+        $methodOptions = array(
+            'chat_id' => $bot->getChatId(),
             'parse_mode' => 'HTML',
-            'text' => "Я не знаю такой команды"
-        ];
+            'text' => "<b>{$bot->getUserName()}</b>, я не знаю такой команды"
+        );
     break;
 }
