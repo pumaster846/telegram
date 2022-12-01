@@ -34,8 +34,6 @@ class Bot {
         
         $response = curl_exec($initializer);
         curl_close($initializer);
-        
-        return (json_decode($response, 1) ? json_decode($response, 1) : $response);
     }
     public function commandBuildRequest() {
         switch ($this->user_message) {
