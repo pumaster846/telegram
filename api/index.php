@@ -3,9 +3,9 @@ const API_URL = "https://api.telegram.org/bot";
 const API_TOKEN = "5888375092:AAGYWV58LLmmDQnvaZv_litXbTnqIg6h1ZE";
 
 class Bot {
-    protected $chat_id;
-    protected $user_name;
-    protected $user_message;
+    protected int $chat_id;
+    protected string $user_name;
+    protected string $user_message;
 
     public function commandSetData() {
         $data = json_decode(file_get_contents('php://input'), true);
