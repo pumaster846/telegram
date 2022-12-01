@@ -7,12 +7,12 @@ class Bot {
     protected $user_name;
     protected $user_message;
 
-    public function getData() {
+    public function getUserData() {
         $data = json_decode(file_get_contents('php://input'), true);
         return $data['callback_query'] ? $data['callback_query'] : $data['message'];   
     }
-    public function setData() {
-        $data = $this->getData();
+    public function setUserData() {
+        $data = self::getUserData();
         
         $this->chat_id = $data['chat']['id'];
         $this->user_name = $data['chat']['first_name'];
@@ -99,5 +99,5 @@ class Bot {
 }
 
 $bot = new Bot();
-$bot->setData();
+$bot->setUserData();
 $bot->commandBuildRequest();
