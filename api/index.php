@@ -77,8 +77,7 @@ switch ($bot->getUserMessage()) {
             )
         );
         $bot->sendRequest('sendMessage', $methodOptions);
-
-        $bot->sendRequest('sendDice', ['chat_id' => $bot->getChatId(), 'emoji' => hex2bin('F09F8F80')]);
+        $bot->sendRequest('sendDice', ['chat_id' => $bot->getChatId(), 'emoji' => '🎲']);
     break;
 
     case 'о нас':
