@@ -77,8 +77,8 @@ switch ($bot->getUserMessage()) {
                 ]
             ]
         );
-        sendRequest('sendMessage', $methodOptions);
-        sendRequest('sendMessage', ['chat_id' => $bot->getChatId(), 'text' => "Смайл"]);
+        $bot->sendRequest('sendMessage', $methodOptions);
+        $bot->sendRequest('sendMessage', ['chat_id' => $bot->getChatId(), 'text' => "Смайл"]);
     break;
 
     case 'о нас':
@@ -87,7 +87,7 @@ switch ($bot->getUserMessage()) {
             'parse_mode' => 'HTML',
             'text' => "<b>О компании</b>" . PHP_EOL . "" . PHP_EOL . "Информация о компании"
         );
-        sendRequest('sendMessage', $methodOptions);
+        $bot->sendRequest('sendMessage', $methodOptions);
     break;
 
     case 'контакты':
@@ -97,7 +97,7 @@ switch ($bot->getUserMessage()) {
             'first_name' => 'Имя',
             'last_name' => 'Фамилия'
         );
-        sendRequest('sendMessage', $methodOptions);
+        $bot->sendRequest('sendMessage', $methodOptions);
     break;
 
     default:
@@ -106,6 +106,6 @@ switch ($bot->getUserMessage()) {
             'parse_mode' => 'HTML',
             'text' => "<b>{$bot->getUserName()}</b>, я не знаю такой команды"
         );
-        sendRequest('sendMessage', $methodOptions);
+        $bot->sendRequest('sendMessage', $methodOptions);
     break;
 }
