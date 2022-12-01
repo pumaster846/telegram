@@ -19,10 +19,12 @@ class Bot {
         $this->user_name    = $data['from']['first_name'];
         $this->user_message = mb_strtolower(($data['text'] ? $data['text'] : $data['data']),'utf-8');
     }
-    public function commandSendRequest(string $method, array $methodOptions = []) {
+    public function sendRequest(string $method, array $methodOptions) {
         $initializer = curl_init();
         
         curl_setopt_array($initializer, array(
+            CURLOPT_POST => true,
+            CURLOPT_HEADER => false,
             CURLOPT_URL => API_URL . API_TOKEN . '/' . $method,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => 10,
@@ -60,7 +62,7 @@ class Bot {
                     ]
                 ];
                 
-                $this->commandSendRequest('sendMessage', ['chat_id' => $this->chat_id, 'text' => "Привет?"]);
+                $this->sendRequest('sendMessage', ['chat_id' => $this->chat_id, 'text' => "Привет?"]);
             break;
         
             case 'о нас':
@@ -94,7 +96,7 @@ class Bot {
                 ];
             break;
         }
-        $this->commandSendRequest($method, $methodOptions);
+        $this->sendRequest($method, $methodOptions);
     }
 }
 
