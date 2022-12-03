@@ -81,7 +81,7 @@ switch ($bot->getUserMessage()) {
         $bot->sendRequest('sendMessage', ['chat_id' => $bot->getChatId(), 'text' => hex2bin('F09FA496')]);
     break;
 
-     case 'услуги':
+    case 'услуги':
         $methodOptions = array(
             'chat_id' => $bot->getChatId(),
             'title' => 'Веб-разработка',
@@ -91,7 +91,7 @@ switch ($bot->getUserMessage()) {
             'currency' => 'RUB',
             'prices' => array(
                 [
-                    'label' => 'Веб-дизайн',
+                    'label' => 'PHP',
                     'amount' => 129900
                 ]
             ),
