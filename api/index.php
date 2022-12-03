@@ -84,21 +84,18 @@ switch ($bot->getUserMessage()) {
     case 'услуги':
         $methodOptions = array(
             'chat_id' => $bot->getChatId(),
-            'title' => 'услуги',
-            'description' => 'Услуга',
+            'title' => 'Наши услуги',
+            'description' => 'Список наших услуг',
             'payload' => 'service-001',
             'provider_token' => PAYMENT_TOKEN,
             'currency' => 'RUB',
             'prices' => array(
-                'label' => 'Веб-дизайн',
-                'amount' => 1299
+                [
+                    'label' => 'Веб-дизайн',
+                    'amount' => 1299
+                ]
             ),
-            'photo_url' => 'https://luxe-host.ru/wp-content/uploads/d/2/3/d23bafd6830cf7f5cf220c6de9761223.jpeg',
-            'photo_width' => 150,
-            'photo_height' => 200,
-            'need_name' => true,
-            'need_phone_number' => true,
-            'protect_content' => true
+            'photo_url' => 'https://luxe-host.ru/wp-content/uploads/d/2/3/d23bafd6830cf7f5cf220c6de9761223.jpeg'
         );
         $bot->sendRequest('sendInvoice', $methodOptions);
     break;
